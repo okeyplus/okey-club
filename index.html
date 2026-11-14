@@ -1,0 +1,130 @@
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#08271e">
+<title>OKEY CLUB</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#08271e;color:#f5edda;font-family:Arial,sans-serif;text-align:center}
+header{padding:25px 10px;border-bottom:1px solid #c9a45c}
+.logo{font: bold 34px Georgia,serif;letter-spacing:5px;color:#e5ca87}
+.sub{font-size:10px;letter-spacing:4px;color:#c9a45c;margin-top:5px}
+main{padding:35px 15px}
+h1{font:30px Georgia,serif;color:#e5ca87}
+p{color:#b9cabe}
+button{width:100%;max-width:340px;padding:15px;margin:8px;border-radius:12px;font-weight:bold;font-size:14px}
+.gold{background:linear-gradient(135deg,#ead49a,#b58a43);color:#14251c;border:0}
+.dark{background:#103c2d;color:#ead49a;border:1px solid #c9a45c}
+#game{display:none}
+.table{margin:25px auto;padding:45px 10px;max-width:450px;border:7px solid #98733b;border-radius:45%;background:#14543a;box-shadow:inset 0 0 25px #04170f}
+.seats{display:flex;justify-content:space-around;font-size:12px;color:#ead49a}
+.tiles{display:flex;justify-content:center;gap:4px;flex-wrap:wrap;margin:20px auto}
+.tile{background:#f5edda;color:var(--c);border-radius:5px;padding:11px 8px;font-weight:bold;font-size:20px;box-shadow:0 3px #b8a98b;border:2px solid transparent}
+.tile.selected{transform:translateY(-7px);border-color:#d9b76c}
+.red{--c:#bd403b}.blue{--c:#3476b8}.black{--c:#27332e}.yellow{--c:#c18e16}
+#message{color:#e5ca87;min-height:22px;font-size:13px}
+footer{color:#81998b;font-size:11px;padding:25px}
+</style>
+</head>
+<body>
+<header>
+ <div class="logo">OKEY CLUB</div>
+ <div class="sub">THE CLASSIC TURKISH TILE GAME</div>
+</header>
+<main id="home">
+ <h1>Willkommen bei OKEY CLUB</h1>
+ <p>Dein Tisch. Deine Runde. Dein Spiel.</p>
+ <button class="gold" onclick="startGame()">KLASSISCHES OKEY SPIELEN</button>
+ <br>
+ <button class="dark" onclick="language()">DEUTSCH / TÜRKÇE</button>
+ <p>Premium-Spielerlebnis · Classic Okey</p>
+</main>
+<section id="game" style="padding:15px">
+ <h1>Klassisches Okey</h1>
+ <div class="table">
+  <div class="seats"><span>🤖 Spieler 2</span><span>🤖 Spieler 3</span></div>
+  <div class="logo" style="margin:35px 0">OKEY CLUB</div>
+  <p id="indicator">Anzeige</p>
+  <p id="okey">Okey</p>
+  <div class="seats"><span>🤖 Spieler 4</span><span>🙂 Du</span></div>
+ </div>
+ <h3>Deine Spielsteine</h3>
+ <div id="tiles" class="tiles"></div>
+ <p id="message">Wähle einen Stein.</p>
+ <button class="gold" onclick="drawTile()">STEIN ZIEHEN</button>
+ <button class="dark" onclick="discardTile()">STEIN ABLEGEN</button>
+ <button class="dark" onclick="backHome()">ZUR STARTSEITE</button>
+</section>
+<footer>OKEY CLUB © 2026</footer>
+<script>
+const colors=["red","blue","black","yellow"];
+let hand=[],deck=[],selected=-1,hasDrawn=false;
+let german=true;
+function shuffle(a){
+ for(let i=a.length-1;i>0;i--){
+  let j=Math.floor(Math.random()*(i+1));
+  [a[i],a[j]]=[a[j],a[i]];
+ }
+ return a;
+}
+function startGame(){
+ deck=[];
+ for(let c of colors)for(let n=1;n<=13;n++)for(let i=0;i<2;i++)deck.push({c,n});
+ deck.push({c:"black",n:"J"},{c:"black",n:"J"});
+ shuffle(deck);
+ hand=deck.splice(0,15);
+ const indicator=deck.find(x=>x.n!=="J");
+ const okey={c:indicator.c,n:indicator.n===13?1:indicator.n+1};
+ document.getElementById("indicator").textContent="Anzeige: "+indicator.n+" "+indicator.c;
+ document.getElementById("okey").textContent="Okey: "+okey.n+" "+okey.c;
+ selected=-1;hasDrawn=false;
+ document.getElementById("home").style.display="none";
+ document.getElementById("game").style.display="block";
+ document.getElementById("message").textContent="Du beginnst mit 15 Steinen. Lege einen ab.";
+ render();
+}
+function render(){
+ const area=document.getElementById("tiles");
+ area.innerHTML="";
+ hand.forEach((x,i)=>{
+  const b=document.createElement("button");
+  b.className="tile "+x.c+(selected===i?" selected":"");
+  b.textContent=x.n;
+  b.onclick=()=>{selected=i;render()};
+  area.appendChild(b);
+ });
+}
+function drawTile(){
+ if(hasDrawn){message("Du hast bereits gezogen.");return}
+ if(hand.length!==14){message("Lege zuerst einen Stein ab.");return}
+ if(!deck.length){message("Der Ziehstapel ist leer.");return}
+ hand.push(deck.pop());hasDrawn=true;selected=-1;render();
+ message("Stein gezogen. Wähle einen Stein zum Ablegen.");
+}
+function discardTile(){
+ if(selected<0){message("Bitte wähle zuerst einen Stein.");return}
+ if(hand.length===15&&!hasDrawn){
+  hand.splice(selected,1);selected=-1;render();
+  message("Erster Stein abgelegt. Dein Zug ist beendet.");
+  return;
+ }
+ if(!hasDrawn){message("Bitte zuerst einen Stein ziehen.");return}
+ hand.splice(selected,1);selected=-1;hasDrawn=false;render();
+ message("Stein abgelegt. Dein nächster Zug ist bereit.");
+}
+function message(s){document.getElementById("message").textContent=s}
+function backHome(){
+ document.getElementById("game").style.display="none";
+ document.getElementById("home").style.display="block";
+}
+function language(){
+ german=!german;
+ document.querySelector("#home h1").textContent=
+ german?"Willkommen bei OKEY CLUB":"OKEY CLUB'e hoş geldin";
+}
+</script>
+</body>
+</html>
