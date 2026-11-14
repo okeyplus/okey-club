@@ -1,130 +1,54 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="de">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#08271e">
-<title>OKEY CLUB</title>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><meta name="theme-color" content="#09271e">
+<title>OKEY CLUB · Classic 0.2</title>
 <style>
-*{box-sizing:border-box}
-body{margin:0;background:#08271e;color:#f5edda;font-family:Arial,sans-serif;text-align:center}
-header{padding:25px 10px;border-bottom:1px solid #c9a45c}
-.logo{font: bold 34px Georgia,serif;letter-spacing:5px;color:#e5ca87}
-.sub{font-size:10px;letter-spacing:4px;color:#c9a45c;margin-top:5px}
-main{padding:35px 15px}
-h1{font:30px Georgia,serif;color:#e5ca87}
-p{color:#b9cabe}
-button{width:100%;max-width:340px;padding:15px;margin:8px;border-radius:12px;font-weight:bold;font-size:14px}
-.gold{background:linear-gradient(135deg,#ead49a,#b58a43);color:#14251c;border:0}
-.dark{background:#103c2d;color:#ead49a;border:1px solid #c9a45c}
-#game{display:none}
-.table{margin:25px auto;padding:45px 10px;max-width:450px;border:7px solid #98733b;border-radius:45%;background:#14543a;box-shadow:inset 0 0 25px #04170f}
-.seats{display:flex;justify-content:space-around;font-size:12px;color:#ead49a}
-.tiles{display:flex;justify-content:center;gap:4px;flex-wrap:wrap;margin:20px auto}
-.tile{background:#f5edda;color:var(--c);border-radius:5px;padding:11px 8px;font-weight:bold;font-size:20px;box-shadow:0 3px #b8a98b;border:2px solid transparent}
-.tile.selected{transform:translateY(-7px);border-color:#d9b76c}
-.red{--c:#bd403b}.blue{--c:#3476b8}.black{--c:#27332e}.yellow{--c:#c18e16}
-#message{color:#e5ca87;min-height:22px;font-size:13px}
-footer{color:#81998b;font-size:11px;padding:25px}
-</style>
-</head>
-<body>
-<header>
- <div class="logo">OKEY CLUB</div>
- <div class="sub">THE CLASSIC TURKISH TILE GAME</div>
-</header>
-<main id="home">
- <h1>Willkommen bei OKEY CLUB</h1>
- <p>Dein Tisch. Deine Runde. Dein Spiel.</p>
- <button class="gold" onclick="startGame()">KLASSISCHES OKEY SPIELEN</button>
- <br>
- <button class="dark" onclick="language()">DEUTSCH / TÜRKÇE</button>
- <p>Premium-Spielerlebnis · Classic Okey</p>
-</main>
-<section id="game" style="padding:15px">
- <h1>Klassisches Okey</h1>
- <div class="table">
-  <div class="seats"><span>🤖 Spieler 2</span><span>🤖 Spieler 3</span></div>
-  <div class="logo" style="margin:35px 0">OKEY CLUB</div>
-  <p id="indicator">Anzeige</p>
-  <p id="okey">Okey</p>
-  <div class="seats"><span>🤖 Spieler 4</span><span>🙂 Du</span></div>
- </div>
- <h3>Deine Spielsteine</h3>
- <div id="tiles" class="tiles"></div>
- <p id="message">Wähle einen Stein.</p>
- <button class="gold" onclick="drawTile()">STEIN ZIEHEN</button>
- <button class="dark" onclick="discardTile()">STEIN ABLEGEN</button>
- <button class="dark" onclick="backHome()">ZUR STARTSEITE</button>
+:root{--bg:#09271e;--felt:#15513b;--felt2:#0f3d2e;--gold:#d9bd78;--gold2:#ad8747;--cream:#f7f0df;--muted:#b7c8bd;--red:#bd403c;--blue:#2874b9;--black:#252d2a;--yellow:#c18d16}*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#123e30,#061b15 72%);color:var(--cream);font-family:system-ui,-apple-system,Arial,sans-serif;min-height:100vh;text-align:center}header{padding:17px 12px 14px;border-bottom:1px solid #92743d;background:#081f18}.brand{font:700 27px Georgia,serif;letter-spacing:5px;color:var(--gold)}.tag{font-size:9px;letter-spacing:3px;color:#c7a75f;margin-top:4px}.wrap{max-width:760px;margin:auto;padding:16px 12px 32px}.panel{background:#0d3025;border:1px solid #6d5934;border-radius:18px;padding:18px;margin:16px auto;box-shadow:0 12px 30px #0003}.hidden{display:none!important}h1,h2{font-family:Georgia,serif;color:var(--gold);font-weight:500}h1{font-size:30px;margin:12px 0}p{color:var(--muted)}button,select{font:600 14px system-ui;border-radius:12px;padding:13px 16px;border:1px solid var(--gold2);background:#153c2e;color:var(--cream);cursor:pointer}button.primary{background:linear-gradient(135deg,#eddaa5,#b38d4e);color:#15251d;border:0}button:disabled{opacity:.35;cursor:not-allowed}.actions{display:flex;gap:9px;justify-content:center;flex-wrap:wrap}.settings{display:grid;gap:12px;text-align:left;max-width:430px;margin:20px auto}.settings label{font-size:13px;color:var(--muted)}select{width:100%;margin-top:5px}.table{background:radial-gradient(ellipse,#1b684a,#10442f 72%);border:7px solid #9b7840;border-radius:46%/32%;padding:16px 10px 18px;min-height:350px;display:flex;flex-direction:column;justify-content:space-between;box-shadow:inset 0 0 30px #04170f,0 8px 22px #0005}.seatrow{display:flex;justify-content:space-around;gap:8px}.seat{min-width:105px;padding:7px 10px;border:1px solid #d4b66e77;border-radius:12px;background:#08291fbb;font-size:12px}.seat.active{outline:2px solid var(--gold);background:#315b3e}.seat .count{display:block;color:#e2cb91;font-size:11px;margin-top:3px}.centerinfo{padding:12px}.indicator{display:inline-flex;align-items:center;gap:10px;background:#09291fbd;border:1px solid #c7a65b;border-radius:12px;padding:7px 12px;font-size:12px}.tile{width:35px;height:49px;border-radius:6px;background:linear-gradient(110deg,#fffdf4,#e8dfc9);border:1px solid #b8ae98;box-shadow:0 3px 0 #9c927c;display:inline-flex;align-items:center;justify-content:center;position:relative;font-weight:800;font-size:23px;line-height:1;color:var(--tile);user-select:none}.tile.small{width:29px;height:40px;font-size:19px}.tile.back{background:repeating-linear-gradient(45deg,#d8c28a,#d8c28a 4px,#f2e7c8 4px,#f2e7c8 8px);color:#886b34}.tile.selected{transform:translateY(-10px);outline:3px solid var(--gold);box-shadow:0 7px 0 #9c7a3d}.hand{display:flex;gap:4px;justify-content:center;align-items:flex-end;flex-wrap:wrap;min-height:58px;padding:8px 2px}.tile.red{--tile:var(--red)}.tile.blue{--tile:var(--blue)}.tile.black{--tile:var(--black)}.tile.yellow{--tile:var(--yellow)}.tile.fake{font-size:13px;color:#8e713d}.sectiontitle{font-size:13px;color:var(--gold);letter-spacing:1px;margin:12px 0 3px}.status{min-height:24px;color:#e7d39d;font-size:13px;margin:8px}.controls{display:flex;justify-content:center;gap:8px;flex-wrap:wrap}.controls button{min-width:115px}.piles{display:flex;justify-content:center;gap:22px;align-items:center;margin:12px}.pile{background:#0a2c21;border:1px solid #b18e4d;border-radius:12px;padding:8px 12px;font-size:12px;min-width:95px}.pile strong{display:block;color:var(--gold);font-size:18px}.note{font-size:11px;color:#9db3a6;line-height:1.5}.log{max-height:95px;overflow:auto;text-align:left;font-size:11px;color:#b8c9bd;background:#08251c;border-radius:10px;padding:8px}.modal{position:fixed;inset:0;background:#000a;display:grid;place-items:center;padding:20px;z-index:5}.modalbox{max-width:420px;width:100%;background:#0d3025;border:1px solid var(--gold);border-radius:18px;padding:24px}.lang{float:right;font-size:11px;padding:7px 10px}.footer{font-size:10px;color:#789184;padding:18px}
+@media(min-width:600px){.tile{width:43px;height:58px;font-size:27px}.table{min-height:390px}}
+</style></head>
+<body><header><button class="lang" id="langBtn">DE / TR</button><div class="brand">OKEY CLUB</div><div class="tag">THE CLASSIC TURKISH TILE GAME</div></header>
+<div class="wrap">
+<section id="home" class="panel"><h1 id="welcome">Willkommen bei OKEY CLUB</h1><p id="tagline">Dein Tisch. Deine Runde. Dein Spiel.</p><div class="settings"><label id="levelLabel">Schwierigkeit der Computergegner<select id="level"><option value="mixed">Verschiedene Stufen (leicht, mittel, schwer)</option><option value="easy">Alle leicht</option><option value="medium">Alle mittel</option><option value="hard">Alle schwer</option></select></label><label id="styleLabel">Gegner-Stile<select id="style"><option value="distinct">Drei unterschiedliche Spielstile</option></select></label></div><div class="actions"><button class="primary" id="startBtn">KLASSISCHES OKEY SPIELEN</button></div><p class="note" id="homeNote">Lokaler Prototyp · Einzelspieler gegen 3 Computergegner</p></section>
+<section id="game" class="hidden"><div class="actions" style="justify-content:space-between"><button id="homeBtn">← Startseite</button><span class="note" id="roundLabel">Runde 1</span><button id="rulesBtn">Regeln</button></div>
+<div class="panel" style="padding:10px"><div class="table"><div class="seatrow"><div class="seat" id="seat1">🤖 Deniz<span class="count">14 Steine</span></div><div class="seat" id="seat2">🤖 Ece<span class="count">14 Steine</span></div></div><div class="centerinfo"><div class="indicator">Anzeige <span id="indicatorTile"></span> <span>· Okey</span> <span id="okeyTile"></span></div><div class="piles"><div class="pile">Ziehstapel<strong id="deckCount">0</strong></div><div class="pile">Ablage<strong id="discardTop">–</strong></div></div><div class="status" id="status">Dein Zug: Ziehe einen Stein.</div></div><div class="seatrow"><div class="seat" id="seat3">🤖 Mert<span class="count">14 Steine</span></div><div class="seat active" id="seat0">🙂 Du<span class="count">15 Steine</span></div></div></div></div>
+<div class="panel"><div class="sectiontitle" id="handTitle">DEINE STEINE</div><div id="hand" class="hand"></div><div class="controls"><button class="primary" id="drawBtn">Stein ziehen</button><button id="takeBtn">Ablage nehmen</button><button id="discardBtn">Stein ablegen</button><button id="sortBtn">Sortieren</button></div><div class="status" id="hint">Wähle einen Stein durch Antippen.</div></div>
+<div class="panel"><div class="sectiontitle">SPIELVERLAUF</div><div class="log" id="log">Die Runde beginnt.</div><p class="note">Hinweis: Der Prototyp enthält eine regelbasierte KI und eine lokale Gewinnprüfung. Er ist noch kein Online-Multiplayer.</p></div>
 </section>
-<footer>OKEY CLUB © 2026</footer>
+<div class="footer">OKEY CLUB © 2026 · CLASSIC PROTOTYPE 0.2</div></div>
+<div id="modal" class="modal hidden"><div class="modalbox"><h2 id="modalTitle">Runde beendet</h2><p id="modalText"></p><div class="actions"><button class="primary" id="againBtn">Neue Runde</button><button id="closeModal">Schließen</button></div></div></div>
 <script>
-const colors=["red","blue","black","yellow"];
-let hand=[],deck=[],selected=-1,hasDrawn=false;
-let german=true;
-function shuffle(a){
- for(let i=a.length-1;i>0;i--){
-  let j=Math.floor(Math.random()*(i+1));
-  [a[i],a[j]]=[a[j],a[i]];
- }
- return a;
+(()=>{
+const $=id=>document.getElementById(id);const colors=['red','blue','black','yellow'];const names=['Du','Deniz','Ece','Mert'];const styles=['Du','Sammelprofi','Abwurf-Beobachter','Risiko-Spieler'];let lang='de',players=[],deck=[],discard=[],indicator=null,okey=null,turn=0,selected=-1,hasDrawn=false,round=1,ended=false;
+const tr={welcome:'OKEY CLUB\'E HOŞ GELDİN',tagline:'Masan. Turun. Oyunun.',start:'KLASİK OKEY OYNA',level:'Bilgisayar zorluk seviyesi',hand:'TAŞLARIN',draw:'Taş çek',take:'Yerden al',drop:'Taş at',sort:'Sırala',status:'Sıra sende: Bir taş çek.',choose:'Dokunarak bir taş seç.',home:'← Ana sayfa',rules:'Kurallar',deck:'Çekme destesi'};
+function tile(c,n,id){return {c,n,id:id??Math.random().toString(36).slice(2)}}function isFake(t){return t.n==='F'}function face(t){return isFake(t)?'★':String(t.n)}function tileHTML(t,small=false){return `<span class="tile ${t.c}${isFake(t)?' fake':''}${small?' small':''}">${face(t)}</span>`}function shuffle(a){for(let i=a.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function buildDeck(){let a=[];for(const c of colors)for(let n=1;n<=13;n++)for(let k=0;k<2;k++)a.push(tile(c,n));a.push(tile('black','F'),tile('black','F'));return shuffle(a)}
+function nextNum(n){return n===13?1:n+1}function sortHand(h){h.sort((a,b)=>colors.indexOf(a.c)-colors.indexOf(b.c)||(typeof a.n==='number'?a.n:99)-(typeof b.n==='number'?b.n:99))}
+function init(){deck=buildDeck();discard=[];indicator=deck.pop();while(isFake(indicator))indicator=deck.pop();okey=tile(indicator.c,nextNum(indicator.n));players=[{hand:[],name:'Du',level:'human',style:'human'},{hand:[],name:'Deniz',level:'easy',style:'collector'},{hand:[],name:'Ece',level:'medium',style:'watcher'},{hand:[],name:'Mert',level:'hard',style:'risk'}];let level=$('level').value;if(level!=='mixed')for(let i=1;i<4;i++)players[i].level=level;for(let i=0;i<4;i++)players[i].hand=deck.splice(0,i===0?15:14);sortHand(players[0].hand);turn=0;selected=-1;hasDrawn=false;ended=false;$('indicatorTile').innerHTML=tileHTML(indicator,true);$('okeyTile').innerHTML=tileHTML(okey,true);$('discardTop').textContent='–';$('log').textContent='Die Runde beginnt. Du bist Startspieler und hast 15 Steine.';render();$('home').classList.add('hidden');$('game').classList.remove('hidden');$('roundLabel').textContent='Runde '+round;setStatus('Du beginnst mit 15 Steinen. Lege einen Stein ab.');}
+function render(){ $('hand').innerHTML=players[0].hand.map((t,i)=>`<span class="tile ${t.c}${isFake(t)?' fake':''}${i===selected?' selected':''}" data-i="${i}">${face(t)}</span>`).join('');$('hand').querySelectorAll('.tile').forEach(el=>el.addEventListener('click',()=>{selected=+el.dataset.i;render();$('hint').textContent='Ausgewählt: '+face(players[0].hand[selected])+'.'}));$('deckCount').textContent=deck.length;for(let i=1;i<4;i++){let s=$('seat'+i);s.querySelector('.count').textContent=players[i].hand.length+' Steine';s.classList.toggle('active',turn===i)}$('seat0').querySelector('.count').textContent=players[0].hand.length+' Steine';$('seat0').classList.toggle('active',turn===0);$('drawBtn').disabled=turn!==0||hasDrawn||ended||players[0].hand.length!==14;$('takeBtn').disabled=turn!==0||hasDrawn||ended||players[0].hand.length!==14||discard.length===0;$('discardBtn').disabled=turn!==0||selected<0||ended||(!hasDrawn&&players[0].hand.length!==15);$('discardTop').textContent=discard.length?face(discard[discard.length-1]):'–';}
+function setStatus(s){$('status').textContent=s;render() }function log(s){$('log').textContent=s+'\n'+$('log').textContent}
+function draw(){if(turn!==0||hasDrawn||players[0].hand.length!==14)return;if(deck.length===0){finish('Unentschieden','Der Ziehstapel ist leer.');return}players[0].hand.push(deck.pop());hasDrawn=true;selected=-1;setStatus('Stein gezogen. Wähle einen Stein und lege ihn ab.');$('hint').textContent='Du hast gezogen.'}
+function takeDiscard(){if(turn!==0||hasDrawn||players[0].hand.length!==14||!discard.length)return;players[0].hand.push(discard.pop());hasDrawn=true;selected=-1;setStatus('Ablagestein aufgenommen. Lege nun einen Stein ab.');$('hint').textContent='Du hast den obersten Ablagestein genommen.'}
+function discardHuman(){if(turn!==0||selected<0)return;if(!hasDrawn&&players[0].hand.length!==15)return;let t=players[0].hand.splice(selected,1)[0];discard.push(t);selected=-1;hasDrawn=false;log('Du legst '+face(t)+' ab.');if(checkWin(players[0].hand)){finish('Du hast gewonnen!','Deine 14 Steine bilden eine gültige Okey-Kombination.');return}turn=1;setStatus('Deniz ist am Zug …');render();setTimeout(aiTurn,650)}
+function canUseAsJoker(t){return t.c===okey.c&&t.n===okey.n}
+function groupsFor(hand){let tiles=hand.filter(t=>!canUseAsJoker(t)).map(t=>isFake(t)?{c:indicator.c,n:indicator.n,id:t.id,source:t}:t);let jokers=hand.filter(t=>canUseAsJoker(t));let groups=[]; // exact-cover search; joker substitutions are explored via generated groups
+ const key=t=>t.id;
+ function addGroup(arr){if(arr.length>=3&&arr.length<=13)groups.push(arr)}
+ // natural runs and same-number groups
+ for(const c of colors){let by=new Map();for(const t of tiles.filter(x=>x.c===c))by.set(t.n,[...(by.get(t.n)||[]),t]);for(let start=1;start<=13;start++){for(let len=3;len<=13;len++){let ns=Array.from({length:len},(_,i)=>((start+i-1)%13)+1);if(new Set(ns).size!==len)continue;let choices=ns.map(n=>by.get(n)||[]);if(choices.every(x=>x.length)){let rec=(idx,arr)=>{if(idx===choices.length){addGroup(arr);return}for(const t of choices[idx])rec(idx+1,[...arr,t])};rec(0,[])}}}}
+ for(let n=1;n<=13;n++){let by=colors.map(c=>tiles.filter(t=>t.c===c&&t.n===n));for(let mask=0;mask<16;mask++){let arr=[];for(let i=0;i<4;i++)if(mask>>i&1&&by[i].length)arr.push(by[i][0]);if(arr.length>=3)addGroup(arr)}}
+ // Joker-capable groups: substitute up to 2 jokers in runs/groups (limited candidate generation)
+ let jokerTiles=jokers.slice(0,2);if(jokerTiles.length){for(const c of colors)for(let start=1;start<=13;start++)for(let len=3;len<=Math.min(6,hand.length);len++){let seq=Array.from({length:len},(_,i)=>((start+i-1)%13)+1);let missing=seq.filter(n=>!tiles.some(t=>t.c===c&&t.n===n));if(missing.length>0&&missing.length<=jokerTiles.length){let arr=seq.map(n=>tiles.find(t=>t.c===c&&t.n===n)).filter(Boolean).concat(jokerTiles.slice(0,missing.length));if(arr.length===len)addGroup(arr)}}for(let n=1;n<=13;n++){let present=colors.map(c=>tiles.find(t=>t.c===c&&t.n===n)).filter(Boolean);let missing=4-present.length;if(present.length>=1&&missing>0&&missing<=jokerTiles.length){let arr=present.concat(jokerTiles.slice(0,missing));if(arr.length>=3)addGroup(arr)}}}
+ // exact cover on tile ids; no duplicate group members
+ const uniq=new Map();for(const g of groups){let ids=g.map(key).sort().join(',');uniq.set(ids,g)}groups=[...uniq.values()];let byId=new Map(hand.map(t=>[t.id,[]]));for(const g of groups)for(const t of g)if(byId.has(t.id))byId.get(t.id).push(g);
+ function solve(rem){if(!rem.length)return true;let first=rem[0],opts=(byId.get(first.id)||[]).filter(g=>g.every(t=>rem.some(x=>x.id===t.id)));for(const g of opts){let ids=new Set(g.map(key));if(solve(rem.filter(t=>!ids.has(t.id))))return true}return false}return solve(hand);
 }
-function startGame(){
- deck=[];
- for(let c of colors)for(let n=1;n<=13;n++)for(let i=0;i<2;i++)deck.push({c,n});
- deck.push({c:"black",n:"J"},{c:"black",n:"J"});
- shuffle(deck);
- hand=deck.splice(0,15);
- const indicator=deck.find(x=>x.n!=="J");
- const okey={c:indicator.c,n:indicator.n===13?1:indicator.n+1};
- document.getElementById("indicator").textContent="Anzeige: "+indicator.n+" "+indicator.c;
- document.getElementById("okey").textContent="Okey: "+okey.n+" "+okey.c;
- selected=-1;hasDrawn=false;
- document.getElementById("home").style.display="none";
- document.getElementById("game").style.display="block";
- document.getElementById("message").textContent="Du beginnst mit 15 Steinen. Lege einen ab.";
- render();
-}
-function render(){
- const area=document.getElementById("tiles");
- area.innerHTML="";
- hand.forEach((x,i)=>{
-  const b=document.createElement("button");
-  b.className="tile "+x.c+(selected===i?" selected":"");
-  b.textContent=x.n;
-  b.onclick=()=>{selected=i;render()};
-  area.appendChild(b);
- });
-}
-function drawTile(){
- if(hasDrawn){message("Du hast bereits gezogen.");return}
- if(hand.length!==14){message("Lege zuerst einen Stein ab.");return}
- if(!deck.length){message("Der Ziehstapel ist leer.");return}
- hand.push(deck.pop());hasDrawn=true;selected=-1;render();
- message("Stein gezogen. Wähle einen Stein zum Ablegen.");
-}
-function discardTile(){
- if(selected<0){message("Bitte wähle zuerst einen Stein.");return}
- if(hand.length===15&&!hasDrawn){
-  hand.splice(selected,1);selected=-1;render();
-  message("Erster Stein abgelegt. Dein Zug ist beendet.");
-  return;
- }
- if(!hasDrawn){message("Bitte zuerst einen Stein ziehen.");return}
- hand.splice(selected,1);selected=-1;hasDrawn=false;render();
- message("Stein abgelegt. Dein nächster Zug ist bereit.");
-}
-function message(s){document.getElementById("message").textContent=s}
-function backHome(){
- document.getElementById("game").style.display="none";
- document.getElementById("home").style.display="block";
-}
-function language(){
- german=!german;
- document.querySelector("#home h1").textContent=
- german?"Willkommen bei OKEY CLUB":"OKEY CLUB'e hoş geldin";
-}
-</script>
-</body>
-</html>
+function checkWin(h){if(h.length!==14)return false;if(checkPairs(h))return true;return groupsFor(h)}function checkPairs(h){if(h.length!==14)return false;let arr=h.slice();function value(t){return isFake(t)?{c:indicator.c,n:indicator.n}:t}function rec(){if(!arr.length)return true;let a=arr.shift(),av=value(a);let idx=arr.findIndex(b=>{let bv=value(b);return (av.c===bv.c&&av.n===bv.n)||(canUseAsJoker(a)&&canUseAsJoker(b))});if(idx<0){arr.unshift(a);return false}let b=arr.splice(idx,1)[0];if(rec())return true;arr.splice(idx,0,b);arr.unshift(a);return false}return rec()}
+function evaluate(h){let score=0;for(const t of h){if(isFake(t))score+=7;else if(canUseAsJoker(t))score+=9;else{let same=h.filter(x=>x!==t&&!isFake(x)&&x.c===t.c&&Math.abs(x.n-t.n)<=2).length;let rank=h.filter(x=>x!==t&&!isFake(x)&&x.n===t.n&&x.c!==t.c).length;score+=same*2+rank*2.2}}return score}
+function chooseDiscard(p){let h=p.hand;let candidates=h.map((t,i)=>{let rest=h.filter((_,j)=>i!==j);let s=evaluate(rest);if(p.style==='collector'&&isFake(t))s-=100;if(p.style==='watcher'&&discard.length&&t.n===Number(discard[discard.length-1].n))s-=1;if(p.style==='risk'&&canUseAsJoker(t))s-=100;return {i,s}});candidates.sort((a,b)=>a.s-b.s);if(p.level==='easy')return candidates[Math.floor(Math.random()*Math.min(4,candidates.length))].i;if(p.level==='medium')return candidates[Math.floor(Math.random()*Math.min(2,candidates.length))].i;return candidates[0].i}
+function aiTurn(){if(ended)return;let p=players[turn];if(deck.length===0){finish('Unentschieden','Der Ziehstapel ist leer.');return}let take=discard.length&&p.style==='watcher'&&evaluate([...p.hand,discard[discard.length-1]])>evaluate([...p.hand,deck[deck.length-1]])+2;if(take)p.hand.push(discard.pop());else p.hand.push(deck.pop());if(checkWin(p.hand)){finish(p.name+' gewinnt!',p.name+' hat eine gültige Kombination gelegt.');return}let idx=chooseDiscard(p);let t=p.hand.splice(idx,1)[0];discard.push(t);log(p.name+' ('+p.level+') zieht und legt '+face(t)+' ab.');if(checkWin(p.hand)){finish(p.name+' gewinnt!',p.name+' hat eine gültige Kombination gelegt.');return}turn=(turn+1)%4;if(turn===0){setStatus('Du bist wieder am Zug. Ziehe einen Stein.');render()}else{setStatus(players[turn].name+' ist am Zug …');render();setTimeout(aiTurn,550)}}
+function finish(title,text){ended=true;$('modalTitle').textContent=title;$('modalText').textContent=text;$('modal').classList.remove('hidden');render()}function closeModal(){ $('modal').classList.add('hidden');$('home').classList.remove('hidden');$('game').classList.add('hidden');round++}
+$('startBtn').onclick=init;$('drawBtn').onclick=draw;$('takeBtn').onclick=takeDiscard;$('discardBtn').onclick=discardHuman;$('sortBtn').onclick=()=>{sortHand(players[0].hand);selected=-1;render()};$('homeBtn').onclick=()=>{$('home').classList.remove('hidden');$('game').classList.add('hidden')};$('againBtn').onclick=()=>{$('modal').classList.add('hidden');init()};$('closeModal').onclick=closeModal;$('rulesBtn').onclick=()=>alert(lang==='de'?'Ziehe einen Stein (Stapel oder Ablage), lege anschließend einen Stein ab. Ziel: 14 Steine als gültige Reihen oder Gruppen bzw. sieben Paare. Dies ist ein früher Prototyp; Sonderfälle und vollständige Turnierregeln werden noch ergänzt.':'Bir taş çek (deste veya yerden), sonra bir taş at. Amaç: 14 taşı geçerli seri/gruplar veya yedi çift olarak tamamlamak. Bu erken prototipte bazı özel kurallar henüz eksik.');
+$('langBtn').onclick=()=>{lang=lang==='de'?'tr':'de';$('welcome').textContent=lang==='de'?'Willkommen bei OKEY CLUB':tr.welcome;$('tagline').textContent=lang==='de'?'Dein Tisch. Deine Runde. Dein Spiel.':tr.tagline;$('startBtn').textContent=lang==='de'?'KLASSISCHES OKEY SPIELEN':tr.start;$('levelLabel').firstChild.textContent=lang==='de'?'Schwierigkeit der Computergegner':'Bilgisayar zorluk seviyesi';$('handTitle').textContent=lang==='de'?'DEINE STEINE':tr.hand;$('drawBtn').textContent=lang==='de'?'Stein ziehen':tr.draw;$('takeBtn').textContent=lang==='de'?'Ablage nehmen':tr.take;$('discardBtn').textContent=lang==='de'?'Stein ablegen':tr.drop;$('sortBtn').textContent=lang==='de'?'Sortieren':tr.sort;$('homeBtn').textContent=lang==='de'?'← Startseite':tr.home;$('rulesBtn').textContent=lang==='de'?'Regeln':tr.rules;$('hint').textContent=lang==='de'?'Wähle einen Stein durch Antippen.':tr.choose};
+})();
+</script></body></html>
